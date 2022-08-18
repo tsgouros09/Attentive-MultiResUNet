@@ -14,6 +14,9 @@
 
 ### Drums
 #### Sample 1
+<audio controls>
+		<source src="sources/Drums_1.mp3" type="audio/mp3">
+</audio>
 #### Sample 2
 #### Sample 3
 #### Sample 4
