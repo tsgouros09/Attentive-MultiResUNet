@@ -1,28 +1,5 @@
-# Attentive-MultiResUNet Sound Samples
+# Attentive-MultiResUNet 
 
-### Vocals
-#### Sample 1
-#### Sample 2
-#### Sample 3
-#### Sample 4
+Here we will upload the code for the paper "An efficient Short-Time Discrete Cosine Transform and Attentive MultiResUNet framework for Music Source Separation" after its approval
 
-### Bass
-#### Sample 1
-#### Sample 2
-#### Sample 3
-#### Sample 4
-
-### Drums
-#### Sample 1
-<audio controls>
-		<source src="sources/Drums_1.mp3" type="audio/mp3">
-</audio>
-#### Sample 2
-#### Sample 3
-#### Sample 4
-
-### Other
-#### Sample 1
-#### Sample 2
-#### Sample 3
-#### Sample 4
+Listening samples can be checked [here](https://drive.google.com/drive/folders/12c_86K4woc9MCYG5dzkJ5IZq_nzBIFpo?usp=sharing)
