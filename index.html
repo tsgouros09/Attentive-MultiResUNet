@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Efficient Short-Time Discrete Cosine Transform and Attentive
+      MultiResUNet framework for Music Source Separation</title>
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,400i%7CRoboto:500"
+
+      rel="stylesheet">
+    <link rel="stylesheet" href="dist/css/style.css">
+    <script src="https://unpkg.com/scrollreveal@4.0.0/dist/scrollreveal.min.js"></script>
+  </head>
+  <body class="is-boxed has-animations">
+    <div class="body-wrap boxed-container">
+      <header class="site-header">
+        <div class="container">
+          <div class="site-header-inner">
+            <div class="brand header-brand">
+              <h1 class="m-0"> <a href="#"> <br>
+                </a> </h1>
+            </div>
+          </div>
+        </div>
+      </header>
+      <main>
+        <section class="hero text-center">
+          <div class="container-sm">
+            <div class="hero-inner">
+              <h1 class="hero-title h2-mobile mt-0 is-revealing">An efficient
+                Short-Time Discrete Cosine Transform and Attentive MultiResUNet
+                framework for Music Source Separation</h1>
+              <p class="hero-paragraph is-revealing"><span style="font-family: Calibri;">Thomas
+                  Sgouros, Angelos Bousis and Nikolaos Mitianoudis</span></p>
+              <div style="text-align: center;"><span style="font-family: Calibri;">Department
+                  of Electrical and Computer Engineering, </span><br>
+                <span style="font-family: Calibri;">Democritus University of
+                  Thrace,</span><br>
+                <span style="font-family: Calibri;"> 67100, Xanthi Greece </span><br>
+                <span style="font-family: Calibri;"></span></div>
+              <span style="font-family: Calibri;"><a href="mailto:tsgouros@ee.duth.gr">tsgouros@ee.duth.gr</a>,
+                <a href="mailto:bousis.ang@gmail.com">bousis.ang@gmail.com</a>,
+                <a href="mailto:nmitiano@ee.duth.gr">nmitiano@ee.duth.gr</a></span></div>
+            <div class="hero-inner"><span style="font-family: Calibri;"><br>
+              </span></div>
+            <div class="hero-inner">
+              <div style="text-align: center;">
+                <h3><span style="font-family: Calibri;" class="feature">Abstract<br>
+                  </span></h3>
+              </div>
+              <div style="text-align: justify;"><span style="font-family: Calibri;"
+
+                  class="feature">The music source separation problem, where the
+                  task at hand is to estimate the audio components that are
+                  present in a mixture, has been the centre of research activity
+                  for a long time. In more recent frameworks, the problem is
+                  tackled by creating deep learning models, which attempt to
+                  extract information from each component by using Short-Time
+                  Fourier Transform (STFT)} spectrograms as input. Most
+                  approaches assume that one source is present at each
+                  time-frequency point, which allows to allocate this point from
+                  the mixture to the desired source. Since this assumption is
+                  very strong and is reported not to hold in practice, there is
+                  a problem that arises from the use of the magnitude of the
+                  STFT as input to these networks, which is the absence of the
+                  Fourier phase information during the separated source
+                  reconstruction.}&nbsp; The recovery of the Fourier phase
+                  information is neither easily tractable, nor computationally
+                  efficient to estimate. In this paper, we propose a novel
+                  Attentive MultiResUNet architecture, that uses real-valued
+                  Short-Time Discrete Cosine Transform data as inputs. This step
+                  avoids the phase recovery problem, by estimating the
+                  appropriate values within the network itself, rather than
+                  employing complex estimation or post-processing algorithms.
+                  The proposed novel network features a U-Net type structure
+                  with residual skip connections and an attention mechanism that
+                  correlates the skip connection and the decoder output at the
+                  previous level. <br>
+                </span></div>
+              <div style="text-align: justify;"><span style="font-family: Calibri;"
+
+                  class="feature"><br>
+                </span></div>
+              <div style="text-align: justify;"><span style="font-family: Calibri;"
+
+                  class="feature"><br>
+                </span></div>
+              <img src="./architecture-1.jpg" alt="Proposed Architecture" title="Proposed Architecture"></div>
+            <div class="hero-inner" style="margin-left: 9px;">
+              <h2>Audio Samples </h2>
+              <p style="text-align: left;"><strong><u>Example 1</u></strong>:</p>
+              <br>
+              <table style="width: 970px; height: 204px; margin-left: -66px;" border="0">
+                <tbody>
+                  <tr>
+                    <td style="margin-left: -36px; text-align: left;">Vocals:&nbsp;&nbsp;<audio
+
+                        src="Vocals/Vocals_sample_1.m4a" preload="none" controls="controls"></audio></td>
+                    <td style="text-align: left;">Vocals GT : <audio src="Vocals/Vocals_sample_1_gt.m4a"
+
+                        preload="none" controls="controls"></audio></td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: left;">Bass:&nbsp;&nbsp;&nbsp;&nbsp;
+                      &nbsp; <audio src="Bass/Bass_sample_1.m4a" preload="none"
+
+                        controls="controls"></audio></td>
+                    <td style="text-align: left;">Bass GT:&nbsp; &nbsp;
+                      &nbsp;&nbsp; <audio src="Bass/Bass_sample_1_gt.m4a" preload="none"
+
+                        controls="controls"></audio></td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: left;">Drums:&nbsp;&nbsp;<audio src="Drums/Drums_sample_1.m4a"
+
+                        preload="none" controls="controls"></audio></td>
+                    <td style="text-align: left;">Drums GT:&nbsp;&nbsp;<audio src="Drums/Drums_sample_1_gt.m4a"
+
+                        preload="none" controls="controls"></audio></td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: left;">Other:&nbsp;&nbsp; <audio src="Other/Other_sample_1.m4a"
+
+                        preload="none" controls="controls"> </audio></td>
+                    <td style="text-align: left;">Other GT:&nbsp;&nbsp;&nbsp; <audio
+
+                        src="Other/Other_sample_1_gt.m4a" preload="none" controls="controls"></audio></td>
+                  </tr>
+                </tbody>
+              </table>
+              <p style="text-align: left;"><strong><u>Example 2</u></strong>:</p>
+              <br>
+              <table style="width: 970px; height: 204px; margin-left: -66px;" border="0">
+                <tbody>
+                  <tr>
+                    <td style="margin-left: -36px; text-align: left;">Vocals:&nbsp;&nbsp;<audio
+
+                        src="Vocals/Vocals_sample_2.m4a" preload="none" controls="controls"></audio></td>
+                    <td style="text-align: left;">Vocals GT : <audio src="Vocals/Vocals_sample_2_gt.m4a"
+
+                        preload="none" controls="controls"></audio></td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: left;">Bass:&nbsp;&nbsp;&nbsp;&nbsp;
+                      &nbsp; <audio src="Bass/Bass_sample_2.m4a" preload="none"
+
+                        controls="controls"></audio></td>
+                    <td style="text-align: left;">Bass GT:&nbsp; &nbsp;
+                      &nbsp;&nbsp; <audio src="Bass/Bass_sample_2_gt.m4a" preload="none"
+
+                        controls="controls"></audio></td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: left;">Drums:&nbsp;&nbsp;<audio src="Drums/Drums_sample_2.m4a"
+
+                        preload="none" controls="controls"></audio></td>
+                    <td style="text-align: left;">Drums GT:&nbsp;&nbsp;<audio src="Drums/Drums_sample_2_gt.m4a"
+
+                        preload="none" controls="controls"></audio></td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: left;">Other:&nbsp;&nbsp; <audio src="Other/Other_sample_2.m4a"
+
+                        preload="none" controls="controls"> </audio></td>
+                    <td style="text-align: left;">Other GT:&nbsp;&nbsp;&nbsp; <audio
+
+                        src="Other/Other_sample_2_gt.m4a" preload="none" controls="controls"></audio></td>
+                  </tr>
+                </tbody>
+              </table>
+              <p style="text-align: left;"><strong><u>Example 3</u></strong>:</p>
+              <br>
+              <table style="width: 970px; height: 204px; margin-left: -66px;" border="0">
+                <tbody>
+                  <tr>
+                    <td style="margin-left: -36px; text-align: left;">Vocals:&nbsp;&nbsp;<audio
+
+                        src="Vocals/Vocals_sample_3.m4a" preload="none" controls="controls"></audio></td>
+                    <td style="text-align: left;">Vocals GT : <audio src="Vocals/Vocals_sample_3_gt.m4a"
+
+                        preload="none" controls="controls"></audio></td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: left;">Bass:&nbsp;&nbsp;&nbsp;&nbsp;
+                      &nbsp; <audio src="Bass/Bass_sample_3.m4a" preload="none"
+
+                        controls="controls"></audio></td>
+                    <td style="text-align: left;">Bass GT:&nbsp; &nbsp;
+                      &nbsp;&nbsp; <audio src="Bass/Bass_sample_3_gt.m4a" preload="none"
+
+                        controls="controls"></audio></td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: left;">Drums:&nbsp;&nbsp;<audio src="Drums/Drums_sample_3.m4a"
+
+                        preload="none" controls="controls"></audio></td>
+                    <td style="text-align: left;">Drums GT:&nbsp;&nbsp;<audio src="Drums/Drums_sample_3_gt.m4a"
+
+                        preload="none" controls="controls"></audio></td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: left;">Other:&nbsp;&nbsp; <audio src="Other/Other_sample_3.m4a"
+
+                        preload="none" controls="controls"> </audio></td>
+                    <td style="text-align: left;">Other GT:&nbsp;&nbsp;&nbsp; <audio
+
+                        src="Other/Other_sample_3_gt.m4a" preload="none" controls="controls"></audio></td>
+                  </tr>
+                </tbody>
+              </table>
+              
+                   <p style="text-align: left;"><strong><u>Example 4</u></strong>:</p>
+              <br>
+              <table style="width: 970px; height: 204px; margin-left: -66px;" border="0">
+                <tbody>
+                  <tr>
+                    <td style="margin-left: -36px; text-align: left;">Vocals:&nbsp;&nbsp;<audio
+
+                        src="Vocals/Vocals_sample_4.m4a" preload="none" controls="controls"></audio></td>
+                    <td style="text-align: left;">Vocals GT : <audio src="Vocals/Vocals_sample_4_gt.m4a"
+
+                        preload="none" controls="controls"></audio></td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: left;">Bass:&nbsp;&nbsp;&nbsp;&nbsp;
+                      &nbsp; <audio src="Bass/Bass_sample_4.m4a" preload="none"
+
+                        controls="controls"></audio></td>
+                    <td style="text-align: left;">Bass GT:&nbsp; &nbsp;
+                      &nbsp;&nbsp; <audio src="Bass/Bass_sample_4_gt.m4a" preload="none"
+
+                        controls="controls"></audio></td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: left;">Drums:&nbsp;&nbsp;<audio src="Drums/Drums_sample_4.m4a"
+
+                        preload="none" controls="controls"></audio></td>
+                    <td style="text-align: left;">Drums GT:&nbsp;&nbsp;<audio src="Drums/Drums_sample_4_gt.m4a"
+
+                        preload="none" controls="controls"></audio></td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: left;">Other:&nbsp;&nbsp; <audio src="Other/Other_sample_4.m4a"
+
+                        preload="none" controls="controls"> </audio></td>
+                    <td style="text-align: left;">Other GT:&nbsp;&nbsp;&nbsp; <audio
+
+                        src="Other/Other_sample_4_gt.m4a" preload="none" controls="controls"></audio></td>
+                  </tr>
+                </tbody>
+              </table>
+              
+                   <p style="text-align: left;"><strong><u>Example 5</u></strong>:</p>
+              <br>
+              <table style="width: 970px; height: 204px; margin-left: -66px;" border="0">
+                <tbody>
+                  <tr>
+                    <td style="margin-left: -36px; text-align: left;">Vocals:&nbsp;&nbsp;<audio
+
+                        src="Vocals/Vocals_sample_5.m4a" preload="none" controls="controls"></audio></td>
+                    <td style="text-align: left;">Vocals GT : <audio src="Vocals/Vocals_sample_5_gt.m4a"
+
+                        preload="none" controls="controls"></audio></td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: left;">Bass:&nbsp;&nbsp;&nbsp;&nbsp;
+                      &nbsp; <audio src="Bass/Bass_sample_5.m4a" preload="none"
+
+                        controls="controls"></audio></td>
+                    <td style="text-align: left;">Bass GT:&nbsp; &nbsp;
+                      &nbsp;&nbsp; <audio src="Bass/Bass_sample_5_gt.m4a" preload="none"
+
+                        controls="controls"></audio></td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: left;">Drums:&nbsp;&nbsp;<audio src="Drums/Drums_sample_5.m4a"
+
+                        preload="none" controls="controls"></audio></td>
+                    <td style="text-align: left;">Drums GT:&nbsp;&nbsp;<audio src="Drums/Drums_sample_5_gt.m4a"
+
+                        preload="none" controls="controls"></audio></td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: left;">Other:&nbsp;&nbsp; <audio src="Other/Other_sample_5.m4a"
+
+                        preload="none" controls="controls"> </audio></td>
+                    <td style="text-align: left;">Other GT:&nbsp;&nbsp;&nbsp; <audio
+
+                        src="Other/Other_sample_5_gt.m4a" preload="none" controls="controls"></audio></td>
+                  </tr>
+                </tbody>
+              </table>
+              
+                   <p style="text-align: left;"><strong><u>Example 6</u></strong>:</p>
+              <br>
+              <table style="width: 970px; height: 204px; margin-left: -66px;" border="0">
+                <tbody>
+                  <tr>
+                    <td style="margin-left: -36px; text-align: left;">Vocals:&nbsp;&nbsp;<audio
+
+                        src="Vocals/Vocals_sample_6.m4a" preload="none" controls="controls"></audio></td>
+                    <td style="text-align: left;">Vocals GT : <audio src="Vocals/Vocals_sample_6_gt.m4a"
+
+                        preload="none" controls="controls"></audio></td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: left;">Bass:&nbsp;&nbsp;&nbsp;&nbsp;
+                      &nbsp; <audio src="Bass/Bass_sample_6.m4a" preload="none"
+
+                        controls="controls"></audio></td>
+                    <td style="text-align: left;">Bass GT:&nbsp; &nbsp;
+                      &nbsp;&nbsp; <audio src="Bass/Bass_sample_6_gt.m4a" preload="none"
+
+                        controls="controls"></audio></td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: left;">Drums:&nbsp;&nbsp;<audio src="Drums/Drums_sample_6.m4a"
+
+                        preload="none" controls="controls"></audio></td>
+                    <td style="text-align: left;">Drums GT:&nbsp;&nbsp;<audio src="Drums/Drums_sample_6_gt.m4a"
+
+                        preload="none" controls="controls"></audio></td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: left;">Other:&nbsp;&nbsp; <audio src="Other/Other_sample_6.m4a"
+
+                        preload="none" controls="controls"> </audio></td>
+                    <td style="text-align: left;">Other GT:&nbsp;&nbsp;&nbsp; <audio
+
+                        src="Other/Other_sample_6_gt.m4a" preload="none" controls="controls"></audio></td>
+                  </tr>
+                </tbody>
+              </table>
+              
+                   <p style="text-align: left;"><strong><u>Example 7</u></strong>:</p>
+              <br>
+              <table style="width: 970px; height: 204px; margin-left: -66px;" border="0">
+                <tbody>
+                  <tr>
+                    <td style="margin-left: -36px; text-align: left;">Vocals:&nbsp;&nbsp;<audio
+
+                        src="Vocals/Vocals_sample_7.m4a" preload="none" controls="controls"></audio></td>
+                    <td style="text-align: left;">Vocals GT : <audio src="Vocals/Vocals_sample_7_gt.m4a"
+
+                        preload="none" controls="controls"></audio></td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: left;">Bass:&nbsp;&nbsp;&nbsp;&nbsp;
+                      &nbsp; <audio src="Bass/Bass_sample_7.m4a" preload="none"
+
+                        controls="controls"></audio></td>
+                    <td style="text-align: left;">Bass GT:&nbsp; &nbsp;
+                      &nbsp;&nbsp; <audio src="Bass/Bass_sample_7_gt.m4a" preload="none"
+
+                        controls="controls"></audio></td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: left;">Drums:&nbsp;&nbsp;<audio src="Drums/Drums_sample_7.m4a"
+
+                        preload="none" controls="controls"></audio></td>
+                    <td style="text-align: left;">Drums GT:&nbsp;&nbsp;<audio src="Drums/Drums_sample_7_gt.m4a"
+
+                        preload="none" controls="controls"></audio></td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: left;">Other:&nbsp;&nbsp; <audio src="Other/Other_sample_7.m4a"
+
+                        preload="none" controls="controls"> </audio></td>
+                    <td style="text-align: left;">Other GT:&nbsp;&nbsp;&nbsp; <audio
+
+                        src="Other/Other_sample_7_gt.m4a" preload="none" controls="controls"></audio></td>
+                  </tr>
+                </tbody>
+              </table>
+              
+                   <p style="text-align: left;"><strong><u>Example 8</u></strong>:</p>
+              <br>
+              <table style="width: 970px; height: 204px; margin-left: -66px;" border="0">
+                <tbody>
+                  <tr>
+                    <td style="margin-left: -36px; text-align: left;">Vocals:&nbsp;&nbsp;<audio
+
+                        src="Vocals/Vocals_sample_8.m4a" preload="none" controls="controls"></audio></td>
+                    <td style="text-align: left;">Vocals GT : <audio src="Vocals/Vocals_sample_8_gt.m4a"
+
+                        preload="none" controls="controls"></audio></td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: left;">Bass:&nbsp;&nbsp;&nbsp;&nbsp;
+                      &nbsp; <audio src="Bass/Bass_sample_8.m4a" preload="none"
+
+                        controls="controls"></audio></td>
+                    <td style="text-align: left;">Bass GT:&nbsp; &nbsp;
+                      &nbsp;&nbsp; <audio src="Bass/Bass_sample_8_gt.m4a" preload="none"
+
+                        controls="controls"></audio></td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: left;">Drums:&nbsp;&nbsp;<audio src="Drums/Drums_sample_8.m4a"
+
+                        preload="none" controls="controls"></audio></td>
+                    <td style="text-align: left;">Drums GT:&nbsp;&nbsp;<audio src="Drums/Drums_sample_8_gt.m4a"
+
+                        preload="none" controls="controls"></audio></td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: left;">Other:&nbsp;&nbsp; <audio src="Other/Other_sample_8.m4a"
+
+                        preload="none" controls="controls"> </audio></td>
+                    <td style="text-align: left;">Other GT:&nbsp;&nbsp;&nbsp; <audio
+
+                        src="Other/Other_sample_8_gt.m4a" preload="none" controls="controls"></audio></td>
+                  </tr>
+                </tbody>
+              </table>
+              
+                   <p style="text-align: left;"><strong><u>Example 9</u></strong>:</p>
+              <br>
+              <table style="width: 970px; height: 204px; margin-left: -66px;" border="0">
+                <tbody>
+                  <tr>
+                    <td style="margin-left: -36px; text-align: left;">Vocals:&nbsp;&nbsp;<audio
+
+                        src="Vocals/Vocals_sample_9.m4a" preload="none" controls="controls"></audio></td>
+                    <td style="text-align: left;">Vocals GT : <audio src="Vocals/Vocals_sample_9_gt.m4a"
+
+                        preload="none" controls="controls"></audio></td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: left;">Bass:&nbsp;&nbsp;&nbsp;&nbsp;
+                      &nbsp; <audio src="Bass/Bass_sample_9.m4a" preload="none"
+
+                        controls="controls"></audio></td>
+                    <td style="text-align: left;">Bass GT:&nbsp; &nbsp;
+                      &nbsp;&nbsp; <audio src="Bass/Bass_sample_9_gt.m4a" preload="none"
+
+                        controls="controls"></audio></td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: left;">Drums:&nbsp;&nbsp;<audio src="Drums/Drums_sample_9.m4a"
+
+                        preload="none" controls="controls"></audio></td>
+                    <td style="text-align: left;">Drums GT:&nbsp;&nbsp;<audio src="Drums/Drums_sample_9_gt.m4a"
+
+                        preload="none" controls="controls"></audio></td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: left;">Other:&nbsp;&nbsp; <audio src="Other/Other_sample_9.m4a"
+
+                        preload="none" controls="controls"> </audio></td>
+                    <td style="text-align: left;">Other GT:&nbsp;&nbsp;&nbsp; <audio
+
+                        src="Other/Other_sample_9_gt.m4a" preload="none" controls="controls"></audio></td>
+                  </tr>
+                </tbody>
+              </table>
+              
+              
+                   <p style="text-align: left;"><strong><u>Example 10</u></strong>:</p>
+              <br>
+              <table style="width: 970px; height: 204px; margin-left: -66px;" border="0">
+                <tbody>
+                  <tr>
+                    <td style="margin-left: -36px; text-align: left;">Vocals:&nbsp;&nbsp;<audio
+
+                        src="Vocals/Vocals_sample_10.m4a" preload="none" controls="controls"></audio></td>
+                    <td style="text-align: left;">Vocals GT : <audio src="Vocals/Vocals_sample_10_gt.m4a"
+
+                        preload="none" controls="controls"></audio></td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: left;">Bass:&nbsp;&nbsp;&nbsp;&nbsp;
+                      &nbsp; <audio src="Bass/Bass_sample_10.m4a" preload="none"
+
+                        controls="controls"></audio></td>
+                    <td style="text-align: left;">Bass GT:&nbsp; &nbsp;
+                      &nbsp;&nbsp; <audio src="Bass/Bass_sample_10_gt.m4a" preload="none"
+
+                        controls="controls"></audio></td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: left;">Drums:&nbsp;&nbsp;<audio src="Drums/Drums_sample_10.m4a"
+
+                        preload="none" controls="controls"></audio></td>
+                    <td style="text-align: left;">Drums GT:&nbsp;&nbsp;<audio src="Drums/Drums_sample_10_gt.m4a"
+
+                        preload="none" controls="controls"></audio></td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: left;">Other:&nbsp;&nbsp; <audio src="Other/Other_sample_10.m4a"
+
+                        preload="none" controls="controls"> </audio></td>
+                    <td style="text-align: left;">Other GT:&nbsp;&nbsp;&nbsp; <audio
+
+                        src="Other/Other_sample_10_gt.m4a" preload="none" controls="controls"></audio></td>
+                  </tr>
+                </tbody>
+              </table>
+              
+              
+              
+            </div>
+          </div>
+        </section>
+        &nbsp; <br>
+        <section class="newsletter section">
+          <div class="container-sm">
+            <div class="newsletter-inner section-inner"></div>
+          </div>
+        </section>
+      </main>
+      <footer class="site-footer text-light">
+        <div class="container">
+          <div class="site-footer-inner">
+            <div class="brand footer-brand"> <a href="#">
+                <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                  <title>Ava</title>
+                  <defs>
+                    <path d="M32 16H16v16H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h28a2 2 0 0 1 2 2v14z"
+
+                      id="logo-gradient-footer-a"></path>
+                    <linearGradient x1="50%" y1="50%" y2="100%" id="logo-gradient-footer-b">
+                      <stop stop-color="#FFF" stop-opacity="0" offset="0%"></stop>
+                      <stop stop-color="#FFF" offset="100%"></stop> </linearGradient>
+                  </defs>
+                  <g fill="none" fill-rule="evenodd">
+                    <mask id="logo-gradient-footer-c" fill="#fff">
+                      <use xlink:href="#logo-gradient-footer-a"></use> </mask>
+                    <use fill-opacity=".32" fill="#FFF" xlink:href="#logo-gradient-footer-a"></use>
+                    <path fill="url(#logo-gradient-footer-b)" mask="url(#logo-gradient-footer-c)"
+
+                      d="M-16-16h32v32h-32z"></path> </g> </svg> </a> </div>
+            <ul class="footer-social-links list-reset">
+              <li> <a href="#"> <span class="screen-reader-text">Facebook</span>&nbsp;
+                  </a> </li>
+              <li> <a href="#"> <span class="screen-reader-text">Twitter</span>&nbsp;<svg
+
+                    width="16" height="16" xmlns="http://www.w3.org/2000/svg"> </svg>
+                </a> </li>
+              <li> <a href="#"> <span class="screen-reader-text">Google</span>&nbsp;
+                  </a> </li>
+            </ul>
+            <div class="footer-copyright">© 2018 Ava, all rights reserved</div>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script src="dist/js/main.min.js"></script>
+    
+  </body>
+</html>
