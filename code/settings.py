@@ -29,6 +29,7 @@ MUSDB18_PATH = '.../musdb18/'                               # Set MUSDB18 folder
 TRAINED_MODEL = 'Models/model_name'                         # Set path for trained model
 
 # EVALUATION SETTINGS
+EN_THRES = False                                            # Setting for energy thresholding as a post-processing step
 VOCALS_ENERGY_THRESHOLD = 1e-3
 BASS_ENERGY_THRESHOLD = 1e-3
 DRUMS_ENERGY_THRESHOLD = 1e-3
