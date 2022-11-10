@@ -47,7 +47,8 @@ def estimate_and_evaluate(trackCut, model, component, energy_threshold):
     input = np.expand_dims(dct_mix_spec[:MAX_BINS,start:end], axis=0)
     four_stems = model(input, training=False)
     source[:MAX_BINS,start:end] = four_stems.numpy().reshape((MAX_BINS,TIME_BINS))
-    source = energy_thresholding(source, energy_threshold)
+    if EN_THRES == True:
+        source = energy_thresholding(source, energy_threshold)
 
   remainder = dct_mix_spec.shape[1]-(dct_mix_spec.shape[1]//TIME_BINS)*TIME_BINS
   gt_source = librosa.resample(librosa.to_mono(trackCut.targets[component].audio.T), orig_sr=ORIGINAL_SAMPLING_RATE, target_sr=TARGET_SAMPLING_RATE)
