@@ -6,7 +6,7 @@ from eval_functions import estimate_and_evaluate, are_sources_silent
 from settings import *
 
 mus_test = musdb.DB(root=MUSDB18_PATH, subsets='test', download=False)
-model = MultiResUNet()
+model = Attentive_MultiResUNet()
 component = COMPONENT
 model.load_weights(TRAINED_MODEL)
 if component == 'vocals':
