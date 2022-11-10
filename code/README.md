@@ -1,4 +1,4 @@
-In this folder you can find the python code for MultiResUNet. 
+In this folder you can find the python code for Attentive MultiResUNet. 
 
 Before training a model open the settings.py file and change the path for MUSDB18 to where it's located in your drive.
 You can also change the parameters in settings.py file to your preference.
