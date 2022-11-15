@@ -4,6 +4,6 @@ In this repository you can find the python (Tensorflow) code for the Attentive-M
 
 All the related files can be found in the **code** folder or you can check them [here](https://github.com/tsgouros09/Attentive-MultiResUNet/tree/main/code).
 
-Listening samples can be found [here](https://tsgouros09.github.io/Attentive-MultiResUNet/)
+Listening samples can be found [here](https://tsgouros09.github.io/Attentive-MultiResUNet/).
 
-The paper is available from [here](https://ieeexplore.ieee.org/document/9947051)
+The paper is available from [here](https://ieeexplore.ieee.org/document/9947051).
