@@ -28,4 +28,4 @@ Audio samples can be found [here](https://tsgouros09.github.io/Attentive-MultiRe
 ## Citation
 Please cite the following paper, if you are using this code.
 
-Sgouros T., Mpousis A., Mitianoudis N., "An efficient Short-Time Discrete Cosine Transform and Attentive MultiResUNet framework for Music Source Separation ", IEEE Access, Vol. 10, pp. 119448-119459, 2022
+Sgouros T., Bousis A., Mitianoudis N., "An efficient Short-Time Discrete Cosine Transform and Attentive MultiResUNet framework for Music Source Separation ", IEEE Access, Vol. 10, pp. 119448-119459, 2022
