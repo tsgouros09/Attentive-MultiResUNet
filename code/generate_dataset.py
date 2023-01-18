@@ -65,8 +65,8 @@ def getSTDCTSpec(audio, orig_sr, target_sr, win_len, hop_size):
     """
     if orig_sr!= target_sr:
         audio = librosa.resample(y=audio, orig_sr=orig_sr, target_sr=target_sr)
-        stdct_spec = stdct.frameWind(audio, frame=win_len, hop_size=hop_size)
-        return stdct_spec
+    stdct_spec = stdct.frameWind(audio, frame=win_len, hop_size=hop_size)
+    return stdct_spec
 
 def dataGeneration(batch_indices, batch_parts, mus, component):
     """
